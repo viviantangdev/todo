@@ -2,7 +2,7 @@
 import { createContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-type TodoItem = {
+export type TodoItem = {
   id: string;
   title: string;
   completed: boolean;

@@ -5,9 +5,26 @@
   --font-display: "Oswald", sans-serif; 
 }
 
-body {
-  @apply bg-neutral-50 text-neutral-900 font-display;
-  @variant dark {
-    @apply bg-neutral-900 text-neutral-50;
+
+  body {
+    @apply h-screen w-screen font-display text-black 
+    bg-linear-0 from-blue-100 via-white to-indigo-100;
+    @variant dark {
+      @apply text-white 
+      bg-linear-0 from-blue-950/80 via-slate-900 to-black;
+    }
   }
+
+.card{
+  @apply bg-white;
+  @variant dark {
+    @apply bg-slate-800;
+  }
+}
+
+.completeIcon{
+  @apply text-emerald-500;
+}
+.unCompleteIcon{
+  @apply text-gray-500;
 }
