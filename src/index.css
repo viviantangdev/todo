@@ -33,11 +33,9 @@
     border-color: var(--color-border);
   }
   body {
-    @apply h-screen w-screen font-display text-black 
-    bg-linear-0 from-blue-100 via-white to-indigo-100;
+    @apply h-screen w-screen overflow-hidden font-display text-black bg-white;
     @variant dark {
-      @apply text-white 
-      bg-linear-0 from-blue-950/80 via-slate-900 to-black;
+      @apply text-white bg-black;
     }
   }
   button {
@@ -46,6 +44,13 @@
 }
 
 @layer components {
+  .content {
+    @apply bg-linear-0 from-blue-100 via-white to-indigo-100;
+    @variant dark {
+      @apply text-white 
+      bg-linear-0 from-blue-950/80 via-slate-900 to-black;
+    }
+  }
   .card,
   .tab {
     @apply bg-white animate-fade-in-scale transition-smooth;

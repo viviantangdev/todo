@@ -9,7 +9,7 @@ export const TabButton = ({ label, onClick, active }: TabButtonProps) => {
     <button
        aria-label={label}
       onClick={onClick}
-      className={`px-4 py-2 w-45 shadow-lg ${active ? 'activeTab' : 'tab'}`}
+      className={`px-4 py-2 max-w-45 shadow-lg ${active ? 'activeTab' : 'tab'}`}
     >
       {label}
     </button>

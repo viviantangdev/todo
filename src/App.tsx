@@ -43,7 +43,7 @@ function App() {
   };
 
   return (
-    <div className=' space-y-5 p-4'>
+    <div className='content flex flex-col gap-5 p-4 h-screen w-full rounded-2xl lg:max-w-180 lg:m-auto'>
       <header>
         <div className='flex justify-between items-center'>
           <h1 className='flex items-center gap-1'>
@@ -53,7 +53,7 @@ function App() {
           <ThemeButton />
         </div>
       </header>
-      <main className='space-y-4'>
+      <main className='flex-1 flex flex-col gap-5 min-h-0'>
         <section>
           <AddTodoInput
             value={newTodo}
@@ -62,7 +62,7 @@ function App() {
           />
         </section>
         <section>
-          <div className='space-x-1'>
+          <div className='flex flex-wrap gap-2'>
             {tabs.map((tab) => {
               const isActive = activeTab === tab.title;
               const count = TAB_CONFIG[tab.title].getCount(counts);
@@ -78,7 +78,7 @@ function App() {
             })}
           </div>
         </section>
-        <section className='space-y-2'>
+        <section className='flex-1 flex flex-col gap-2 min-h-0'>
           <p>{subTitle}</p>
           {filteredTodos.length === 0 ? (
             <EmptyState
@@ -92,7 +92,7 @@ function App() {
               }
             />
           ) : (
-            <ul className='space-y-2'>
+            <ul className='flex-1 space-y-2 min-h-0 overflow-y-auto'>
               {filteredTodos.map((todo) => {
                 return (
                   <li

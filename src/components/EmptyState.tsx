@@ -39,10 +39,10 @@ export const EmptyState = ({ tab, children }: EmptyStateProps) => {
   const { icon: Icon, title, description } = emptyConfigs[tab];
 
   return (
-    <div className='flex flex-col items-center justify-center gap-2 h-85 rounded-xl border-dashed border-2 '>
+    <div className='flex flex-col items-center justify-center gap-2 h-85 rounded-xl border-dashed border-2 p-5'>
       <Icon className='h-15 w-15 completeIcon stroke-1' />
       <h4 className='font-semibold text-2xl tracking-wide'>{title}</h4>
-      <p className='mb-5'>{description}</p>
+      <p className='mb-5 text-center'>{description}</p>
       {children}
     </div>
   );
