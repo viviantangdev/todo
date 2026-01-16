@@ -4,13 +4,16 @@ import App from './App.tsx';
 import { ThemeProvider } from './context/themeContext.tsx';
 import { TodosProvider } from './context/todosContext.tsx';
 import './index.css';
+import { TabsProvider } from './context/tabsContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <TodosProvider>
-        <App />
-      </TodosProvider>
+      <TabsProvider>
+        <TodosProvider>
+          <App />
+        </TodosProvider>
+      </TabsProvider>
     </ThemeProvider>
   </StrictMode>
 );

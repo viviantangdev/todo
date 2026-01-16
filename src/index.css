@@ -2,29 +2,57 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-display: "Oswald", sans-serif; 
+  --font-display: 'Oswald', sans-serif;
+  --color-border: oklch(87.2% 0.01 258.338);
+
+  --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+  @keyframes fade-in-scale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 
+@variant dark {
+  --color-border: oklch(44.6% 0.03 256.802);
+}
 
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
   body {
     @apply h-screen w-screen font-display text-black 
+    animate-fade-in-scale
     bg-linear-0 from-blue-100 via-white to-indigo-100;
     @variant dark {
       @apply text-white 
       bg-linear-0 from-blue-950/80 via-slate-900 to-black;
     }
   }
+}
 
-.card{
-  @apply bg-white;
-  @variant dark {
-    @apply bg-slate-800;
+@layer components {
+  .card,
+  .tab {
+    @apply bg-white;
+    @variant dark {
+      @apply bg-slate-800;
+    }
   }
-}
 
-.completeIcon{
-  @apply text-emerald-500;
-}
-.unCompleteIcon{
-  @apply text-gray-500;
+  .activeTab {
+    @apply bg-emerald-500 text-white text-shadow-2xs animate-fade-in-scale;
+  }
+  .completeIcon {
+    @apply text-emerald-500 animate-fade-in-scale;
+  }
+  .unCompleteIcon {
+    @apply text-gray-500 animate-fade-in-scale;
+  }
 }

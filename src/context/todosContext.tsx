@@ -10,6 +10,8 @@ export type TodoItem = {
 
 type TodosContextType = {
   todos: TodoItem[];
+  completedTodos: TodoItem[];
+  unCompletedTodos: TodoItem[];
   deleteTodo: (id: string) => void;
   toggleComplete: (id: string) => void;
 };
@@ -25,6 +27,8 @@ export const TodosContext = createContext<TodosContextType | undefined>(
 
 export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
   const [todos, setTodos] = useLocalStorage('TODOS', DEFAULT_TODOS);
+  const completedTodos = todos.filter((todo) => todo.completed === true);
+  const unCompletedTodos = todos.filter((todo) => todo.completed === false);
 
   const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -39,7 +43,15 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <TodosContext.Provider value={{ todos, deleteTodo, toggleComplete }}>
+    <TodosContext.Provider
+      value={{
+        todos,
+        completedTodos,
+        unCompletedTodos,
+        deleteTodo,
+        toggleComplete,
+      }}
+    >
       {children}
     </TodosContext.Provider>
   );

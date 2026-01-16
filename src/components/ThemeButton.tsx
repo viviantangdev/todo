@@ -5,11 +5,11 @@ export const ThemeButton = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button type='button' className='cursor-pointer'>
+    <button type='button' onClick={toggleTheme} className='cursor-pointer p-3'>
       {theme === 'light' ? (
-        <Moon onClick={toggleTheme} />
+        <Moon className='stroke-1 ' />
       ) : (
-        <Sun onClick={toggleTheme} />
+        <Sun className='stroke-1' />
       )}
     </button>
   );
