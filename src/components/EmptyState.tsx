@@ -60,6 +60,7 @@ export const EmptyState = ({
           <button
             key={action.label}
             type='button'
+               aria-label={action.label}
             onClick={action.onClick}
             className='primaryButton'
           >

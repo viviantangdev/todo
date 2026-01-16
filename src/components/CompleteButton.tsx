@@ -8,7 +8,11 @@ type CompleteButtonProps = {
 
 const CompleteButton = ({ item, onClick }: CompleteButtonProps) => {
   return (
-    <button onClick={onClick} className=' flex-none'>
+    <button
+      aria-label='Toggle complete todo'
+      onClick={onClick}
+      className=' flex-none'
+    >
       {item.completed ? (
         <CircleCheckBig className='h-5 w-5 completeIcon' />
       ) : (

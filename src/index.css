@@ -4,8 +4,10 @@
 @theme {
   --font-display: 'Oswald', sans-serif;
   --color-border: oklch(87.2% 0.01 258.338);
+  --transition-smooth: all 0.3s ease-in-out;
 
   --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+
   @keyframes fade-in-scale {
     0% {
       opacity: 0;
@@ -22,13 +24,16 @@
   --color-border: oklch(44.6% 0.03 256.802);
 }
 
+@utility transition-smooth {
+  transition: var(--transition-smooth);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
   }
   body {
     @apply h-screen w-screen font-display text-black 
- 
     bg-linear-0 from-blue-100 via-white to-indigo-100;
     @variant dark {
       @apply text-white 
@@ -36,16 +41,16 @@
     }
   }
   button {
-    @apply cursor-pointer p-3 rounded-xl animate-fade-in-scale;
+    @apply cursor-pointer p-3 rounded-xl animate-fade-in-scale transition-smooth;
   }
 }
 
 @layer components {
   .card,
   .tab {
-    @apply bg-white animate-fade-in-scale transition-all duration-300;
+    @apply bg-white animate-fade-in-scale transition-smooth;
     &:hover {
-      @apply bg-white/60 ;
+      @apply bg-white/60;
     }
     @variant dark {
       @apply bg-slate-800;
@@ -57,7 +62,7 @@
 
   .activeTab,
   .primaryButton {
-    @apply text-white text-shadow-2xs animate-fade-in-scale transition-all duration-300
+    @apply text-white text-shadow-2xs animate-fade-in-scale transition-smooth
     bg-emerald-500;
     &:hover {
       @apply bg-emerald-300 text-black;

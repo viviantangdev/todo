@@ -12,6 +12,7 @@ type TodosContextType = {
   todos: TodoItem[];
   completedTodos: TodoItem[];
   unCompletedTodos: TodoItem[];
+  addTodo: (todoTitle: string) => void;
   deleteTodo: (id: string) => void;
   toggleComplete: (id: string) => void;
 };
@@ -29,6 +30,16 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
   const [todos, setTodos] = useLocalStorage('TODOS', DEFAULT_TODOS);
   const completedTodos = todos.filter((todo) => todo.completed === true);
   const unCompletedTodos = todos.filter((todo) => todo.completed === false);
+
+  const addTodo = (title: string) => {
+    const newTodo: TodoItem = {
+      id: crypto.randomUUID(),
+      title: title,
+      completed: false,
+    };
+
+    setTodos((prev) => [...prev, newTodo]);
+  };
 
   const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -48,6 +59,7 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
         todos,
         completedTodos,
         unCompletedTodos,
+        addTodo,
         deleteTodo,
         toggleComplete,
       }}
