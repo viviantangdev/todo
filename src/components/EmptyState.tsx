@@ -16,7 +16,6 @@ export const EmptyState = ({
   onAddTodo,
   onGoToActive,
 }: EmptyStateProps) => {
-
   const emptyConfigs: Record<
     TabType,
     {
@@ -40,7 +39,7 @@ export const EmptyState = ({
     },
     Completed: {
       icon: CircleCheckBig,
-      title: 'No completed tasks yet.',
+      title: 'No completed todos yet.',
       description: 'Todos you mark as completed will show up here. Keep going!',
       actions: [
         { label: 'Add new todo', onClick: onAddTodo },
@@ -58,7 +57,12 @@ export const EmptyState = ({
       <p>{description}</p>
       <div className='flex gap-1 items-center'>
         {actions.map((action) => (
-          <button key={action.label} type='button' onClick={action.onClick}>
+          <button
+            key={action.label}
+            type='button'
+            onClick={action.onClick}
+            className='primaryButton'
+          >
             {action.label}
           </button>
         ))}

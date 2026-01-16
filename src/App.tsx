@@ -32,6 +32,10 @@ function App() {
   const subTitle = TAB_CONFIG[activeTab].subtitle(counts);
   const filteredTodos = getFilteredTodos(activeTab);
 
+  const handleGoToActive = () => {
+    updateActiveTab('Active');
+  }
+
   return (
     <div className=' space-y-5 p-4'>
       <header>
@@ -67,7 +71,7 @@ function App() {
             <EmptyState
               tab={activeTab}
               onAddTodo={() => console.log('Add todo')}
-              onGoToActive={() => console.log('Go to active')}
+              onGoToActive={handleGoToActive}
             />
           ) : (
             <ul className='space-y-2'>
@@ -92,7 +96,7 @@ function App() {
                     </div>
                     <button
                       onClick={() => deleteTodo(todo.id)}
-                      className=' flex-none p-3 text-gray-500 hover:text-red-500 cursor-pointer'
+                      className='flex-none text-gray-500 hover:text-red-500'
                     >
                       <X className='h-5 w-5 ' />
                     </button>

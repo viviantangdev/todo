@@ -28,26 +28,46 @@
   }
   body {
     @apply h-screen w-screen font-display text-black 
-    animate-fade-in-scale
+ 
     bg-linear-0 from-blue-100 via-white to-indigo-100;
     @variant dark {
       @apply text-white 
       bg-linear-0 from-blue-950/80 via-slate-900 to-black;
     }
   }
+  button {
+    @apply cursor-pointer p-3 rounded-xl animate-fade-in-scale;
+  }
 }
 
 @layer components {
   .card,
   .tab {
-    @apply bg-white;
+    @apply bg-white animate-fade-in-scale transition-all duration-300;
+    &:hover {
+      @apply bg-white/60 ;
+    }
     @variant dark {
       @apply bg-slate-800;
+      &:hover {
+        @apply bg-slate-600;
+      }
     }
   }
 
-  .activeTab {
-    @apply bg-emerald-500 text-white text-shadow-2xs animate-fade-in-scale;
+  .activeTab,
+  .primaryButton {
+    @apply text-white text-shadow-2xs animate-fade-in-scale transition-all duration-300
+    bg-emerald-500;
+    &:hover {
+      @apply bg-emerald-300 text-black;
+    }
+    @variant dark {
+      @apply bg-emerald-700;
+      &:hover {
+        @apply bg-emerald-500;
+      }
+    }
   }
   .completeIcon {
     @apply text-emerald-500 animate-fade-in-scale;

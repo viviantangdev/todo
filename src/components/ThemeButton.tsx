@@ -5,7 +5,7 @@ export const ThemeButton = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button type='button' onClick={toggleTheme} className='cursor-pointer p-3'>
+    <button type='button' onClick={toggleTheme}>
       {theme === 'light' ? (
         <Moon className='stroke-1 ' />
       ) : (
