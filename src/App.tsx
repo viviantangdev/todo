@@ -37,10 +37,6 @@ function App() {
   const subTitle = TAB_CONFIG[activeTab].subtitle(counts);
   const filteredTodos = getFilteredTodos(activeTab);
 
-  const handleGoToActive = () => {
-    updateActiveTab('Active');
-  };
-
   const handleAddTodo = (todo: string) => {
     addTodo(todo);
     setNewTodo('');
@@ -87,8 +83,13 @@ function App() {
           {filteredTodos.length === 0 ? (
             <EmptyState
               tab={activeTab}
-              onAddTodo={() => console.log('Add todo')}
-              onGoToActive={handleGoToActive}
+              children={
+                <AddTodoInput
+                  value={newTodo}
+                  onChange={(e) => setNewTodo(e.target.value)}
+                  onSubmit={handleAddTodo}
+                />
+              }
             />
           ) : (
             <ul className='space-y-2'>

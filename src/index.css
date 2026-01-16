@@ -49,11 +49,17 @@
   .card,
   .tab {
     @apply bg-white animate-fade-in-scale transition-smooth;
+
+    @variant dark {
+      @apply bg-slate-800;
+    }
+  }
+
+  .tab {
     &:hover {
       @apply bg-white/60;
     }
     @variant dark {
-      @apply bg-slate-800;
       &:hover {
         @apply bg-slate-600;
       }
