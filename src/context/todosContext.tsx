@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
+import { CircleCheckBig, Trash2 } from 'lucide-react';
 import { createContext } from 'react';
+import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export type TodoItem = {
@@ -37,12 +39,18 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
       title: title,
       completed: false,
     };
-
     setTodos((prev) => [...prev, newTodo]);
+    toast(`Added: ${newTodo.title}`, {
+      icon: <CircleCheckBig className='completeIcon' />,
+    });
   };
 
   const deleteTodo = (id: string) => {
+    const deletedTodo: TodoItem = todos.filter((todo) => todo.id === id)[0];
     setTodos(todos.filter((todo) => todo.id !== id));
+    toast(`Deleted: ${deletedTodo.title}`, {
+      icon: <Trash2 className='text-red-400' />,
+    });
   };
 
   const toggleComplete = (id: string) => {

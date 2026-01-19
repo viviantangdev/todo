@@ -18,10 +18,12 @@
       transform: scale(1);
     }
   }
+--toastify-color-progress-default: #636e72 !important;
 }
 
 @variant dark {
   --color-border: oklch(44.6% 0.03 256.802);
+  --toastify-color-progress-default: #636e72 !important;
 }
 
 @utility transition-smooth {

@@ -1,5 +1,6 @@
 import { CircleCheckBig, X } from 'lucide-react';
 import { useState } from 'react';
+import { Bounce, ToastContainer } from 'react-toastify';
 import AddTodoInput from './components/AddTodoInput';
 import CompleteButton from './components/CompleteButton';
 import { EmptyState } from './components/EmptyState';
@@ -7,6 +8,7 @@ import { TabButton } from './components/TabButton';
 import { ThemeButton } from './components/ThemeButton';
 import { TAB_CONFIG, type TabType } from './constants/tabs';
 import { useTabs } from './hooks/useTabs';
+import { useTheme } from './hooks/useTheme';
 import { useTodos } from './hooks/useTodos';
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
   } = useTodos();
   const { tabs, activeTab, updateActiveTab } = useTabs();
   const { addTodo } = useTodos();
+  const { theme } = useTheme();
 
   const [newTodo, setNewTodo] = useState('');
 
@@ -126,6 +129,19 @@ function App() {
           )}
         </section>
       </main>
+      <ToastContainer
+        position='bottom-center'
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme={theme}
+        transition={Bounce}
+      />
     </div>
   );
 }
