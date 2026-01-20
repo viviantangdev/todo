@@ -1,20 +1,18 @@
-import { CircleCheckBig, Edit, X } from 'lucide-react';
+import { CircleCheckBig } from 'lucide-react';
 import { useState } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import AddTodoInput from './components/AddTodoInput';
-import CompleteButton from './components/buttons/CompleteButton';
 import { ThemeButton } from './components/buttons/ThemeButton';
 import { TodoTabs } from './components/buttons/TodoTabs';
-import { EmptyState } from './components/EmptyState';
 import { DeleteTodoModal } from './components/modals/DeleteTodoModal';
 import { EditTodoModal } from './components/modals/EditTodoModal';
+import { TodoList } from './components/TodoList';
 import type { TodoItem } from './context/todosContext';
 import { useTabs } from './hooks/useTabs';
 import { useTheme } from './hooks/useTheme';
 import { useTodos } from './hooks/useTodos';
+import type { MODAL_TYPE } from './utils/miscellaneous';
 import { getTab, type TabType } from './utils/tabs';
-
-type ModalView = 'Delete' | 'Edit';
 
 function App() {
   const {
@@ -51,10 +49,10 @@ function App() {
   const { subTitle } = getTab(activeTab, counts);
   const filteredTodos = getFilteredTodos(activeTab);
 
-  const handleDialog = (todo: TodoItem, view: ModalView) => {
+  const handleModal = (todo: TodoItem, type: MODAL_TYPE) => {
     setSelectedTodo(todo);
 
-    if (view === 'Edit') {
+    if (type === 'EDIT') {
       setIsEditOpen(true);
     } else {
       setIsDeleteOpen(true);
@@ -100,59 +98,14 @@ function App() {
           </section>
           <section className='flex-1 flex flex-col gap-2 min-h-0'>
             <p>{subTitle}</p>
-            {filteredTodos.length === 0 ? (
-              <EmptyState
-                tab={activeTab}
-                children={
-                  <AddTodoInput
-                    value={newTodo}
-                    onChange={(e) => setNewTodo(e.target.value)}
-                    onSubmit={handleAddTodo}
-                  />
-                }
-              />
-            ) : (
-              <ul className='flex-1 space-y-2 min-h-0 overflow-y-auto'>
-                {filteredTodos.map((todo) => {
-                  return (
-                    <li
-                      key={todo.id}
-                      className='flex items-center justify-between gap-3 p-3 shadow-lg card'
-                    >
-                      <div className='flex items-center gap-2 flex-1 min-w-0'>
-                        <CompleteButton
-                          item={todo}
-                          onClick={() => toggleComplete(todo.id)}
-                        />
-                        <p
-                          className={`flex-1 min-w-0 truncate text-lg text-shadow-2xs${
-                            todo.completed && ' text-gray-400'
-                          }`}
-                        >
-                          {todo.title}
-                        </p>
-                      </div>
-                      <div>
-                        <button
-                          aria-label='Edit todo'
-                          onClick={() => handleDialog(todo, 'Edit')}
-                          className='flex-none text-gray-500 hover:text-primary'
-                        >
-                          <Edit className='h-5 w-5' />
-                        </button>
-                        <button
-                          aria-label='Delete todo'
-                          onClick={() => handleDialog(todo, 'Delete')}
-                          className='flex-none text-gray-500 hover:text-red-500'
-                        >
-                          <X className='h-5 w-5' />
-                        </button>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+            <TodoList
+              todos={filteredTodos}
+              onOpenModal={handleModal}
+              onToggleComplete={toggleComplete}
+              newTodoValue={newTodo}
+              onChangeNewTodo={setNewTodo}
+              onAddTodo={handleAddTodo}
+            />
           </section>
         </main>
         <ToastContainer
