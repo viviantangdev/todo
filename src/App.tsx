@@ -1,10 +1,11 @@
-import { CircleCheckBig, Edit, Trash2, X } from 'lucide-react';
+import { CircleCheckBig, Edit, X } from 'lucide-react';
 import { useState } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import AddTodoInput from './components/AddTodoInput';
 import CompleteButton from './components/CompleteButton';
+import { DeleteTodoModal } from './components/DeleteTodoModal';
+import { EditTodoModal } from './components/EditTodoModal';
 import { EmptyState } from './components/EmptyState';
-import { ModalDialog } from './components/ModalDialog';
 import { TabButton } from './components/TabButton';
 import { ThemeButton } from './components/ThemeButton';
 import type { TodoItem } from './context/todosContext';
@@ -182,55 +183,20 @@ function App() {
           transition={Bounce}
         />
         {isEditOpen && (
-          <ModalDialog
+          <EditTodoModal
             onClose={() => setIsEditOpen(false)}
-            header={{
-              title: 'Edit todo',
-              headerIcon: { icon: Edit, styling: 'text-emerald-500' },
-            }}
-            content={
-              <input
-                placeholder='What needs to be done?'
-                autoComplete='off'
-                autoFocus={true}
-                value={selectedTodo!.title}
-                onChange={(e) => {
-                  const edited = e.target.value;
-                  setSelectedTodo((prev) =>
-                    prev ? { ...prev, title: edited } : prev,
-                  );
-                }}
-                required
-                className='w-full rounded-xl bg-white dark:bg-gray-800/70 border border-gray-200/80 dark:border-gray-700/60 p-3 shadow-sm transition-smooth focus-within:shadow-md focus-within:shadow-primary/10 focus-within:border-primary/40 dark:focus-within:border-primary/50 hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500'
-              />
+            todo={selectedTodo}
+            onSave={handleEditTodo}
+            onChange={(title) =>
+              setSelectedTodo((prev) => (prev ? { ...prev, title } : prev))
             }
-            footerAction={{
-              label: 'Save',
-              styling: 'primaryButton',
-              onConfirm: () => handleEditTodo(selectedTodo!),
-            }}
           />
         )}
         {isDeleteOpen && (
-          <ModalDialog
+          <DeleteTodoModal
             onClose={() => setIsDeleteOpen(false)}
-            header={{
-              title: 'Delete todo',
-              headerIcon: { icon: Trash2, styling: 'text-red-500' },
-            }}
-            content={
-              <div className='flex flex-col items-center justify-center gap-3'>
-                <p> Are you sure your want to delete this todo?</p>
-                <span className='italic font-semibold'>
-                  {selectedTodo!.title}
-                </span>
-              </div>
-            }
-            footerAction={{
-              label: 'Delete',
-              styling: 'deleteButton',
-              onConfirm: () => handleDeleteTodo(selectedTodo!.id),
-            }}
+            todo={selectedTodo}
+            onDelete={handleDeleteTodo}
           />
         )}
       </div>
