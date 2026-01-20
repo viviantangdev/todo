@@ -64,7 +64,7 @@ function App() {
 
   return (
     <>
-      <div className='relative content flex flex-col gap-5 p-4 h-screen w-full rounded-2xl lg:max-w-180 lg:m-auto'>
+      <div className='relative content flex flex-col gap-5 p-4 h-screen w-full lg:rounded-2xl lg:max-w-180 lg:m-auto'>
         <header>
           <div className='flex justify-between items-center'>
             <h1 className='flex items-center gap-1'>
@@ -178,12 +178,14 @@ function App() {
             }
             footerAcions={[
               <button
+                aria-label='Cancel'
                 onClick={() => setIsDialogOpen(false)}
                 className='secondaryButton w-full'
               >
                 Cancel
               </button>,
               <button
+                aria-label='Delete todo'
                 onClick={() => handleDeleteTodos(selectedTodo!.id)}
                 className='deleteButton w-full'
               >

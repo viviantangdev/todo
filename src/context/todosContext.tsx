@@ -34,15 +34,17 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
   const unCompletedTodos = todos.filter((todo) => todo.completed === false);
 
   const addTodo = (title: string) => {
-    const newTodo: TodoItem = {
-      id: crypto.randomUUID(),
-      title: title,
-      completed: false,
-    };
-    setTodos((prev) => [...prev, newTodo]);
-    toast(`Added: ${newTodo.title}`, {
-      icon: <CircleCheckBig className='completeIcon' />,
-    });
+    if (title) {
+      const newTodo: TodoItem = {
+        id: crypto.randomUUID(),
+        title: title,
+        completed: false,
+      };
+      setTodos((prev) => [...prev, newTodo]);
+      toast(`Added: ${newTodo.title}`, {
+        icon: <CircleCheckBig className='completeIcon' />,
+      });
+    }
   };
 
   const deleteTodo = (id: string) => {

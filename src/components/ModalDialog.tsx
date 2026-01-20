@@ -27,7 +27,7 @@ export const ModalDialog = ({
         <div className='dialog flex flex-col'>
           {/* Close button */}
           <div className='flex w-full justify-end items-end '>
-            <button onClick={onClose}>
+            <button aria-label='Close dialog' onClick={onClose}>
               <X />
             </button>
           </div>
