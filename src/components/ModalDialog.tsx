@@ -1,5 +1,6 @@
 import { X, type LucideIcon } from 'lucide-react';
 import type React from 'react';
+import { useEffect, type FormEvent } from 'react';
 
 type ModalDialogProps = {
   onClose: () => void;
@@ -11,20 +12,48 @@ type ModalDialogProps = {
     };
   };
   content: React.ReactNode;
-  footerAcions: React.ReactNode[];
+  footerAction: {
+    label: string;
+    onConfirm: () => void;
+  };
 };
 
 export const ModalDialog = ({
   onClose,
   header,
   content,
-  footerAcions,
+  footerAction,
 }: ModalDialogProps) => {
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [onClose]);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    footerAction.onConfirm();
+  };
+
   const HeaderIcon = header.headerIcon;
+  
   return (
     <>
       <div className='backdrop z-10'>
-        <div className='dialog flex flex-col'>
+        <div
+          role='dialog'
+          aria-modal='true'
+          className='dialog flex flex-col z-20'
+        >
           {/* Close button */}
           <div className='flex w-full justify-end items-end '>
             <button aria-label='Close dialog' onClick={onClose}>
@@ -32,16 +61,35 @@ export const ModalDialog = ({
             </button>
           </div>
           {/*Header, Content, Footer actions*/}
-          <div className='flex flex-col justify-center items-center gap-8 p-5 text-center'>
+          <form
+            onSubmit={handleSubmit}
+            className='flex flex-col justify-center items-center gap-8 p-5 text-center'
+          >
             <div className='flex flex-col items-center gap-1.5'>
               <HeaderIcon.icon size={60} className={`${HeaderIcon.styling}`} />
               <h3 className='text-2xl tracking-wide'>{header.title}</h3>
             </div>
             {content}
             <div className='flex gap-2 w-full'>
-              {footerAcions.map((action) => action)}
+              <button
+                type='button'
+                aria-label='Cancel'
+                onClick={onClose}
+                className='secondaryButton w-full'
+              >
+                Cancel
+              </button>
+
+              <button
+                type='submit'
+                autoFocus
+                aria-label={footerAction.label}
+                className='deleteButton w-full'
+              >
+                {footerAction.label}
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>

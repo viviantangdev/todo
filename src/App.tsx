@@ -176,22 +176,10 @@ function App() {
                 </span>
               </div>
             }
-            footerAcions={[
-              <button
-                aria-label='Cancel'
-                onClick={() => setIsDialogOpen(false)}
-                className='secondaryButton w-full'
-              >
-                Cancel
-              </button>,
-              <button
-                aria-label='Delete todo'
-                onClick={() => handleDeleteTodos(selectedTodo!.id)}
-                className='deleteButton w-full'
-              >
-                Delete
-              </button>,
-            ]}
+            footerAction={{
+              label: 'Delete',
+              onConfirm: () => handleDeleteTodos(selectedTodo!.id),
+            }}
           />
         )}
       </div>
