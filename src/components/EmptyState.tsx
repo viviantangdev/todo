@@ -4,7 +4,7 @@ import {
   Rocket,
   type LucideIcon,
 } from 'lucide-react';
-import type { TabType } from '../constants/tabs';
+import type { TabType } from '../utils/constants/tabs';
 
 type EmptyStateProps = {
   tab: TabType;

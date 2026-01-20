@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState } from 'react';
-import { TAB_VALUES, type TabType } from '../constants/tabs';
+import { TAB_VALUES, type TabType } from '../utils/constants/tabs';
 
 export interface TabItem {
   title: TabType;
@@ -13,7 +13,7 @@ type TabsContextType = {
 };
 
 export const TabsContext = createContext<TabsContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const TabsProvider = ({ children }: { children: React.ReactNode }) => {

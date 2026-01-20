@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import { CircleCheckBig, Edit, Trash2 } from 'lucide-react';
 import { createContext } from 'react';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getToastMessage } from '../utils/toastMessages';
 
 export type TodoItem = {
   id: string;
@@ -26,7 +26,7 @@ const DEFAULT_TODOS: TodoItem[] = [
 ];
 
 export const TodosContext = createContext<TodosContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
@@ -42,8 +42,11 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
         completed: false,
       };
       setTodos((prev) => [...prev, newTodo]);
-      toast(`Added: ${newTodo.title}`, {
-        icon: <CircleCheckBig className='completeIcon' />,
+
+      // Toast
+      const { text, Icon, iconClass } = getToastMessage('add', newTodo.title);
+      toast(text, {
+        icon: <Icon className={iconClass} />,
       });
     }
   };
@@ -54,26 +57,35 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     setTodos((prev) =>
-      prev.map((t) => (t.id === todo.id ? { ...t, title: todo.title } : t))
+      prev.map((t) => (t.id === todo.id ? { ...t, title: todo.title } : t)),
     );
-    toast(`Edited: ${todo.title}`, {
-      icon: <Edit className='completeIcon' />,
+
+    // Toast
+    const { text, Icon, iconClass } = getToastMessage('edit', todo.title);
+    toast(text, {
+      icon: <Icon className={iconClass} />,
     });
   };
 
   const deleteTodo = (id: string) => {
     const deletedTodo: TodoItem = todos.filter((todo) => todo.id === id)[0];
     setTodos(todos.filter((todo) => todo.id !== id));
-    toast(`Deleted: ${deletedTodo.title}`, {
-      icon: <Trash2 className='text-red-400' />,
+
+    // Toast
+    const { text, Icon, iconClass } = getToastMessage(
+      'delete',
+      deletedTodo.title,
+    );
+    toast(text, {
+      icon: <Icon className={iconClass} />,
     });
   };
 
   const toggleComplete = (id: string) => {
     setTodos((prev) =>
       prev.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
     );
   };
 

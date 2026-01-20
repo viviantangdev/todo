@@ -7,11 +7,11 @@ import { EmptyState } from './components/EmptyState';
 import { ModalDialog } from './components/ModalDialog';
 import { TabButton } from './components/TabButton';
 import { ThemeButton } from './components/ThemeButton';
-import { TAB_CONFIG, type TabType } from './constants/tabs';
 import type { TodoItem } from './context/todosContext';
 import { useTabs } from './hooks/useTabs';
 import { useTheme } from './hooks/useTheme';
 import { useTodos } from './hooks/useTodos';
+import { TAB_CONFIG, type TabType } from './utils/constants/tabs';
 
 type ModalView = 'Delete' | 'Edit';
 
@@ -30,7 +30,7 @@ function App() {
 
   const [newTodo, setNewTodo] = useState('');
   const [selectedTodo, setSelectedTodo] = useState<TodoItem | undefined>(
-    undefined
+    undefined,
   );
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -64,7 +64,6 @@ function App() {
     addTodo(todo);
     setNewTodo('');
   };
-
   const handleEditTodo = (todo: TodoItem) => {
     setIsEditOpen(false);
     editTodo(todo);
@@ -198,7 +197,7 @@ function App() {
                 onChange={(e) => {
                   const edited = e.target.value;
                   setSelectedTodo((prev) =>
-                    prev ? { ...prev, title: edited } : prev
+                    prev ? { ...prev, title: edited } : prev,
                   );
                 }}
                 required
