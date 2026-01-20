@@ -1,5 +1,5 @@
 import { Trash2 } from 'lucide-react';
-import type { TodoItem } from '../context/todosContext';
+import type { TodoItem } from '../../context/todosContext';
 import { ModalDialog } from './ModalDialog';
 
 type DeleteTodoModalProps = {

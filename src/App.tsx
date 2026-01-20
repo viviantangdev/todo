@@ -2,12 +2,12 @@ import { CircleCheckBig, Edit, X } from 'lucide-react';
 import { useState } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import AddTodoInput from './components/AddTodoInput';
-import CompleteButton from './components/CompleteButton';
-import { DeleteTodoModal } from './components/DeleteTodoModal';
-import { EditTodoModal } from './components/EditTodoModal';
+import CompleteButton from './components/buttons/CompleteButton';
+import { ThemeButton } from './components/buttons/ThemeButton';
+import { TodoTabs } from './components/buttons/TodoTabs';
 import { EmptyState } from './components/EmptyState';
-import { TabButton } from './components/TabButton';
-import { ThemeButton } from './components/ThemeButton';
+import { DeleteTodoModal } from './components/modals/DeleteTodoModal';
+import { EditTodoModal } from './components/modals/EditTodoModal';
 import type { TodoItem } from './context/todosContext';
 import { useTabs } from './hooks/useTabs';
 import { useTheme } from './hooks/useTheme';
@@ -26,7 +26,7 @@ function App() {
     deleteTodo,
     toggleComplete,
   } = useTodos();
-  const { tabs, activeTab, updateActiveTab } = useTabs();
+  const { activeTab } = useTabs();
   const { theme } = useTheme();
 
   const [newTodo, setNewTodo] = useState('');
@@ -96,21 +96,7 @@ function App() {
             />
           </section>
           <section>
-            <div className='flex flex-wrap gap-2'>
-              {tabs.map((tab) => {
-                const isActive = activeTab === tab.tabType;
-                const { getCount } = getTab(tab.tabType, counts);
-
-                return (
-                  <TabButton
-                    key={tab.tabType}
-                    label={`${tab.label} (${getCount})`}
-                    active={isActive}
-                    onClick={() => updateActiveTab(tab.tabType)}
-                  />
-                );
-              })}
-            </div>
+            <TodoTabs counts={counts} />
           </section>
           <section className='flex-1 flex flex-col gap-2 min-h-0'>
             <p>{subTitle}</p>

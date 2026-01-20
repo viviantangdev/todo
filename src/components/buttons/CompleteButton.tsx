@@ -1,5 +1,5 @@
 import { Circle, CircleCheckBig } from 'lucide-react';
-import type { TodoItem } from '../context/todosContext';
+import type { TodoItem } from '../../context/todosContext';
 
 type CompleteButtonProps = {
   item: TodoItem;
