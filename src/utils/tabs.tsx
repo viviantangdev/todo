@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-export const TAB_VALUES = ['All', 'Active', 'Completed'] as const;
+export const TAB_VALUES = ['ALL', 'ACTIVE', 'COMPLETED'] as const;
 export type TabType = (typeof TAB_VALUES)[number];
+type TabConfigKey = keyof typeof TAB_CONFIG;
 
 export const TAB_CONFIG: Record<
   TabType,
@@ -18,20 +19,36 @@ export const TAB_CONFIG: Record<
     }) => string;
   }
 > = {
-  All: {
+  ALL: {
     label: 'All',
     getCount: ({ total }) => total,
     subtitle: ({ completed, total }) =>
       `Todos: ${completed}/${total} completed`,
   },
-  Active: {
-    label: 'All',
+  ACTIVE: {
+    label: 'Active',
     getCount: ({ active }) => active,
     subtitle: ({ active }) => `Active: ${active} remaining`,
   },
-  Completed: {
-    label: 'All',
+  COMPLETED: {
+    label: 'Completed',
     getCount: ({ completed }) => completed,
     subtitle: ({ completed, total }) => `Completed: ${completed}/${total}`,
   },
 };
+
+export function getTab(
+  key: TabConfigKey,
+  count: {
+    total: number;
+    active: number;
+    completed: number;
+  },
+) {
+  const tabConfigKey = TAB_CONFIG[key];
+  return {
+    label: tabConfigKey.label,
+    getCount: tabConfigKey.getCount(count),
+    subTitle: tabConfigKey.subtitle(count),
+  };
+}

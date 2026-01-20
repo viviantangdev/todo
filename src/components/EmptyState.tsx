@@ -4,7 +4,7 @@ import {
   Rocket,
   type LucideIcon,
 } from 'lucide-react';
-import type { TabType } from '../utils/constants/tabs';
+import type { TabType } from '../utils/tabs';
 
 type EmptyStateProps = {
   tab: TabType;
@@ -19,17 +19,17 @@ export const EmptyState = ({ tab, children }: EmptyStateProps) => {
       description: string;
     }
   > = {
-    All: {
+    ALL: {
       icon: Rocket,
       title: 'No todos yet.',
       description: 'Ready to get started?',
     },
-    Active: {
+    ACTIVE: {
       icon: PartyPopper,
       title: 'All caught up!',
       description: "You've cleared the list — nice work!",
     },
-    Completed: {
+    COMPLETED: {
       icon: CircleCheckBig,
       title: 'No completed todos yet.',
       description: 'Todos you mark as completed will show up here. Keep going!',

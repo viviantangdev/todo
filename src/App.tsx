@@ -11,7 +11,7 @@ import type { TodoItem } from './context/todosContext';
 import { useTabs } from './hooks/useTabs';
 import { useTheme } from './hooks/useTheme';
 import { useTodos } from './hooks/useTodos';
-import { TAB_CONFIG, type TabType } from './utils/constants/tabs';
+import { getTab, type TabType } from './utils/tabs';
 
 type ModalView = 'Delete' | 'Edit';
 
@@ -36,8 +36,8 @@ function App() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const getFilteredTodos = (type: TabType) => {
-    if (type === 'Active') return unCompletedTodos;
-    if (type === 'Completed') return completedTodos;
+    if (type === 'ACTIVE') return unCompletedTodos;
+    if (type === 'COMPLETED') return completedTodos;
     return todos;
   };
 
@@ -47,7 +47,7 @@ function App() {
     completed: completedTodos.length,
   };
 
-  const subTitle = TAB_CONFIG[activeTab].subtitle(counts);
+  const { subTitle } = getTab(activeTab, counts);
   const filteredTodos = getFilteredTodos(activeTab);
 
   const handleDialog = (todo: TodoItem, view: ModalView) => {
@@ -97,15 +97,15 @@ function App() {
           <section>
             <div className='flex flex-wrap gap-2'>
               {tabs.map((tab) => {
-                const isActive = activeTab === tab.title;
-                const count = TAB_CONFIG[tab.title].getCount(counts);
+                const isActive = activeTab === tab.tabType;
+                const { getCount } = getTab(tab.tabType, counts);
 
                 return (
                   <TabButton
-                    key={tab.title}
-                    label={`${tab.title} (${count})`}
+                    key={tab.tabType}
+                    label={`${tab.label} (${getCount})`}
                     active={isActive}
-                    onClick={() => updateActiveTab(tab.title)}
+                    onClick={() => updateActiveTab(tab.tabType)}
                   />
                 );
               })}

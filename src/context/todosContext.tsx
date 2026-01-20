@@ -44,7 +44,7 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
       setTodos((prev) => [...prev, newTodo]);
 
       // Toast
-      const { text, Icon, iconClass } = getToastMessage('add', newTodo.title);
+      const { text, Icon, iconClass } = getToastMessage('ADD', newTodo.title);
       toast(text, {
         icon: <Icon className={iconClass} />,
       });
@@ -61,7 +61,7 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // Toast
-    const { text, Icon, iconClass } = getToastMessage('edit', todo.title);
+    const { text, Icon, iconClass } = getToastMessage('EDIT', todo.title);
     toast(text, {
       icon: <Icon className={iconClass} />,
     });
@@ -73,7 +73,7 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Toast
     const { text, Icon, iconClass } = getToastMessage(
-      'delete',
+      'DELETE',
       deletedTodo.title,
     );
     toast(text, {

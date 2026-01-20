@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState } from 'react';
-import { TAB_VALUES, type TabType } from '../utils/constants/tabs';
+import { TAB_CONFIG, TAB_VALUES, type TabType } from '../utils/tabs';
 
 export interface TabItem {
-  title: TabType;
+  tabType: TabType;
+  label: string;
 }
 
 type TabsContextType = {
@@ -17,8 +18,11 @@ export const TabsContext = createContext<TabsContextType | undefined>(
 );
 
 export const TabsProvider = ({ children }: { children: React.ReactNode }) => {
-  const tabs: TabItem[] = TAB_VALUES.map((title) => ({ title }));
-  const [activeTab, setActiveTab] = useState<TabType>('All');
+  const tabs: TabItem[] = TAB_VALUES.map((tabType) => ({
+    tabType,
+    label: TAB_CONFIG[tabType].label,
+  }));
+  const [activeTab, setActiveTab] = useState<TabType>('ALL');
 
   const updateActiveTab = (type: TabType) => {
     setActiveTab(type);

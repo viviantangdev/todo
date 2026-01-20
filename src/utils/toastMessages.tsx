@@ -1,27 +1,37 @@
-import { CircleCheckBig, Edit, Trash2 } from 'lucide-react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { CircleCheckBig, Edit, Trash2, type LucideIcon } from 'lucide-react';
 
-type ToastContentKey = keyof typeof TOAST_CONTENT;
+const TOAST_VALUES = ['ADD', 'EDIT', 'DELETE'] as const;
+type ToastType = (typeof TOAST_VALUES)[number];
+type ToastConfigKey = keyof typeof TOAST_CONFIG;
 
-export const TOAST_CONTENT = {
-  add: {
+const TOAST_CONFIG: Record<
+  ToastType,
+  {
+    message: (todoTitle: string) => string;
+    icon: LucideIcon;
+    iconClass: string;
+  }
+> = {
+  ADD: {
     message: (todoTitle: string) => `Added: ${todoTitle}`,
     icon: CircleCheckBig,
     iconClass: 'completeIcon',
   },
-  edit: {
+  EDIT: {
     message: (todoTitle: string) => `Edited: ${todoTitle}`,
     icon: Edit,
     iconClass: 'completeIcon',
   },
-  delete: {
+  DELETE: {
     message: (todoTitle: string) => `Deleted: ${todoTitle}`,
     icon: Trash2,
     iconClass: 'text-red-400',
   },
 };
 
-export function getToastMessage(key: ToastContentKey, todoTitle: string) {
-  const msg = TOAST_CONTENT[key];
+export function getToastMessage(key: ToastConfigKey, todoTitle: string) {
+  const msg = TOAST_CONFIG[key];
   return {
     text: msg.message(todoTitle),
     Icon: msg.icon,
