@@ -9,6 +9,7 @@
 - Toggle completed todos.
 - Toast notifications.
 - Fully responsive design.
+- Empty states on All/Active/Completed todos.
 
 ## 🛠️ Tech Stack
 - **React** 
