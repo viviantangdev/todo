@@ -18,12 +18,10 @@
       transform: scale(1);
     }
   }
---toastify-color-progress-default: #636e72 !important;
 }
 
 @variant dark {
   --color-border: oklch(44.6% 0.03 256.802);
-  --toastify-color-progress-default: #636e72 !important;
 }
 
 @utility transition-smooth {
@@ -41,7 +39,7 @@
     }
   }
   button {
-    @apply cursor-pointer p-3 rounded-xl animate-fade-in-scale transition-smooth;
+    @apply cursor-pointer text-shadow-2xs px-4 py-2 rounded-xl animate-fade-in-scale transition-smooth;
   }
 }
 
@@ -53,9 +51,11 @@
       bg-linear-0 from-blue-950/80 via-slate-900 to-black;
     }
   }
+
   .card,
-  .tab {
-    @apply bg-white animate-fade-in-scale transition-smooth;
+  .tab,
+  .dialog {
+    @apply rounded-xl bg-white animate-fade-in-scale transition-smooth;
 
     @variant dark {
       @apply bg-slate-800;
@@ -75,8 +75,7 @@
 
   .activeTab,
   .primaryButton {
-    @apply text-white text-shadow-2xs animate-fade-in-scale transition-smooth
-    bg-emerald-500;
+    @apply text-white bg-emerald-500;
     &:hover {
       @apply bg-emerald-300 text-black;
     }
@@ -87,10 +86,41 @@
       }
     }
   }
+  .secondaryButton {
+    @apply border;
+    &:hover {
+      @apply bg-slate-50;
+    }
+    @variant dark {
+      &:hover {
+        @apply bg-slate-600;
+      }
+    }
+  }
+  .deleteButton {
+    @apply bg-red-500 text-white;
+    &:hover {
+      @apply bg-red-400;
+    }
+    @variant dark {
+      @apply bg-red-500;
+      &:hover {
+        @apply bg-red-400;
+      }
+    }
+  }
+
   .completeIcon {
     @apply text-emerald-500 animate-fade-in-scale;
   }
   .unCompleteIcon {
     @apply text-gray-500 animate-fade-in-scale;
+  }
+
+  .backdrop {
+    @apply bg-black/60 h-screen w-full absolute inset-0 flex items-center justify-center;
+  }
+  .dialog {
+    @apply w-[80%] flex items-center justify-center;
   }
 }
