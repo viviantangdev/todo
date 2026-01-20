@@ -1,6 +1,8 @@
 import { Edit, X } from 'lucide-react';
+import { useState } from 'react';
 import type { TodoItem } from '../context/todosContext';
 import { useTabs } from '../hooks/useTabs';
+import { useTodos } from '../hooks/useTodos';
 import type { MODAL_TYPE } from '../utils/miscellaneous';
 import AddTodoInput from './AddTodoInput';
 import CompleteButton from './buttons/CompleteButton';
@@ -23,7 +25,38 @@ export const TodoList = ({
   onChangeNewTodo,
   onAddTodo,
 }: TodoListProps) => {
-  const { activeTab } = useTabs();
+  const { activeTab,  } = useTabs();
+  const { reorderTodos } = useTodos();
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+
+  const handleDragStart = (id: string) => {
+    setDraggedId(id);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDragEnter = (id: string) => {
+    if (draggedId === null || draggedId === id) return;
+
+    const draggedIndex = todos.findIndex((todo) => todo.id === draggedId);
+    const targetIndex = todos.findIndex((todo) => todo.id === id);
+
+    const newTodos = [...todos];
+    const [draggedTodo] = newTodos.splice(draggedIndex, 1);
+    newTodos.splice(targetIndex, 0, draggedTodo);
+
+    reorderTodos(newTodos);
+  };
+
+  const handleDrop = () => {
+    setDraggedId(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+  };
 
   if (todos.length === 0)
     return (
@@ -45,7 +78,15 @@ export const TodoList = ({
         return (
           <li
             key={todo.id}
-            className='flex items-center justify-between gap-3 p-3 shadow-lg card'
+            draggable
+            onDragStart={() => handleDragStart(todo.id)}
+            onDragOver={handleDragOver}
+            onDragEnter={() => handleDragEnter(todo.id)}
+            onDrop={handleDrop}
+            onDragEnd={handleDragEnd}
+            className={`flex items-center justify-between gap-3 p-3 shadow-lg card cursor-grab transition-opacity ${
+              draggedId === todo.id && 'opacity-0'
+            } `}
           >
             <div className='flex items-center gap-2 flex-1 min-w-0'>
               <CompleteButton

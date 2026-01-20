@@ -18,6 +18,7 @@ type TodosContextType = {
   editTodo: (todo: TodoItem) => void;
   deleteTodo: (id: string) => void;
   toggleComplete: (id: string) => void;
+  reorderTodos: (todos: TodoItem[]) => void;
 };
 
 const DEFAULT_TODOS: TodoItem[] = [
@@ -89,6 +90,10 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const reorderTodos = (reorderedTodos: TodoItem[]) => {
+    setTodos(reorderedTodos);
+  };
+
   return (
     <TodosContext.Provider
       value={{
@@ -99,9 +104,11 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
         editTodo,
         deleteTodo,
         toggleComplete,
+        reorderTodos,
       }}
     >
       {children}
     </TodosContext.Provider>
   );
 };
+
