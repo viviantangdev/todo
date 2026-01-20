@@ -1,9 +1,9 @@
 import { Circle, Plus } from 'lucide-react';
-import type { ChangeEvent, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 
 type AddTodoProps = {
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   onSubmit: (value: string) => void;
 };
 
@@ -27,7 +27,7 @@ const AddTodoInput = ({ value, onChange, onSubmit }: AddTodoProps) => {
         autoComplete='off'
         autoFocus={true} // true for instant focus on mount
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value)}
         required
         className='w-full bg-transparent outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500'
       />

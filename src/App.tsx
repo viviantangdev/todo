@@ -74,8 +74,8 @@ function App() {
 
   return (
     <>
-      <div className='relative content flex flex-col gap-5 p-4 h-screen w-full lg:rounded-2xl lg:max-w-180 lg:m-auto'>
-        <header>
+      <div className='relative content flex flex-col p-4 h-screen w-full lg:rounded-2xl lg:max-w-180 lg:m-auto'>
+        <header className='mb-5'>
           <div className='flex justify-between items-center'>
             <h1 className='flex items-center gap-1'>
               <CircleCheckBig className='completeIcon text-shadow-lg' />
@@ -85,11 +85,11 @@ function App() {
           </div>
         </header>
 
-        <main className='flex-1 flex flex-col gap-8 min-h-0'>
+        <main className='flex-1 flex flex-col gap-8 min-h-0 overflow-y-auto'>
           <section>
             <AddTodoInput
               value={newTodo}
-              onChange={(e) => setNewTodo(e.target.value)}
+              onChange={setNewTodo}
               onSubmit={handleAddTodo}
             />
           </section>
@@ -108,6 +108,18 @@ function App() {
             />
           </section>
         </main>
+        <footer className='shrink-0 mt-5'>
+          <div className='text-xs opacity-50'>
+            <span>&copy; {new Date().getFullYear()} </span>
+            <a
+              href='https://viviantangdev.netlify.app/'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Vivian Tang
+            </a>
+          </div>
+        </footer>
         <ToastContainer
           position='bottom-center'
           autoClose={3000}

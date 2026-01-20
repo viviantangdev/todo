@@ -32,7 +32,7 @@ export const TodoList = ({
         children={
           <AddTodoInput
             value={newTodoValue}
-            onChange={(e) => onChangeNewTodo(e.target.value)}
+            onChange={onChangeNewTodo}
             onSubmit={onAddTodo}
           />
         }
