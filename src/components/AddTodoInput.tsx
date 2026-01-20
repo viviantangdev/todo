@@ -1,4 +1,4 @@
-import { CircleCheckBig, Plus } from 'lucide-react';
+import { Circle, Plus } from 'lucide-react';
 import type { ChangeEvent, FormEvent } from 'react';
 
 type AddTodoProps = {
@@ -8,7 +8,6 @@ type AddTodoProps = {
 };
 
 const AddTodoInput = ({ value, onChange, onSubmit }: AddTodoProps) => {
-  
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit(value);
@@ -19,11 +18,8 @@ const AddTodoInput = ({ value, onChange, onSubmit }: AddTodoProps) => {
       onSubmit={handleSubmit}
       className='group relative flex items-center gap-3 rounded-xl bg-white dark:bg-gray-800/70 border border-gray-200/80 dark:border-gray-700/60 p-3 shadow-sm transition-smooth focus-within:shadow-md focus-within:shadow-primary/10 focus-within:border-primary/40 dark:focus-within:border-primary/50 hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600'
     >
-      {/* Left icon – always visible, subtle */}
-      <CircleCheckBig
-        className='text-gray-400 dark:text-gray-500 transition-colors group-focus-within:text-primary/80'
-        strokeWidth={2.5}
-      />
+      {/* Left icon */}
+      <Circle className='text-gray-400 dark:text-gray-500 transition-colors group-focus-within:text-primary/80' />
 
       {/* Input */}
       <input
@@ -34,7 +30,6 @@ const AddTodoInput = ({ value, onChange, onSubmit }: AddTodoProps) => {
         onChange={onChange}
         required
         className='w-full bg-transparent outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500'
-    
       />
 
       {/* Floating Plus button – appears on focus/hover */}

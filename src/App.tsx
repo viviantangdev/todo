@@ -1,4 +1,4 @@
-import { AlertTriangle, CircleCheckBig, X } from 'lucide-react';
+import { CircleCheckBig, Edit, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import AddTodoInput from './components/AddTodoInput';
@@ -13,12 +13,15 @@ import { useTabs } from './hooks/useTabs';
 import { useTheme } from './hooks/useTheme';
 import { useTodos } from './hooks/useTodos';
 
+type ModalView = 'Delete' | 'Edit';
+
 function App() {
   const {
     todos,
     completedTodos,
     unCompletedTodos,
     addTodo,
+    editTodo,
     deleteTodo,
     toggleComplete,
   } = useTodos();
@@ -29,7 +32,8 @@ function App() {
   const [selectedTodo, setSelectedTodo] = useState<TodoItem | undefined>(
     undefined
   );
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const getFilteredTodos = (type: TabType) => {
     if (type === 'Active') return unCompletedTodos;
@@ -46,19 +50,27 @@ function App() {
   const subTitle = TAB_CONFIG[activeTab].subtitle(counts);
   const filteredTodos = getFilteredTodos(activeTab);
 
+  const handleDialog = (todo: TodoItem, view: ModalView) => {
+    setSelectedTodo(todo);
+
+    if (view === 'Edit') {
+      setIsEditOpen(true);
+    } else {
+      setIsDeleteOpen(true);
+    }
+  };
+
   const handleAddTodo = (todo: string) => {
     addTodo(todo);
     setNewTodo('');
   };
 
-  const handleDialog = (todo: TodoItem) => {
-    setSelectedTodo(todo);
-    setIsDialogOpen(true);
+  const handleEditTodo = (todo: TodoItem) => {
+    setIsEditOpen(false);
+    editTodo(todo);
   };
-
-  const handleDeleteTodos = (id: string) => {
-    setIsDialogOpen(false);
-
+  const handleDeleteTodo = (id: string) => {
+    setIsDeleteOpen(false);
     deleteTodo(id);
   };
 
@@ -75,7 +87,7 @@ function App() {
           </div>
         </header>
 
-        <main className='flex-1 flex flex-col gap-5 min-h-0'>
+        <main className='flex-1 flex flex-col gap-8 min-h-0'>
           <section>
             <AddTodoInput
               value={newTodo}
@@ -134,13 +146,22 @@ function App() {
                           {todo.title}
                         </p>
                       </div>
-                      <button
-                        aria-label='Delete todo'
-                        onClick={() => handleDialog(todo)}
-                        className='flex-none text-gray-500 hover:text-red-500'
-                      >
-                        <X className='h-5 w-5' />
-                      </button>
+                      <div>
+                        <button
+                          aria-label='Edit todo'
+                          onClick={() => handleDialog(todo, 'Edit')}
+                          className='flex-none text-gray-500 hover:text-primary'
+                        >
+                          <Edit className='h-5 w-5' />
+                        </button>
+                        <button
+                          aria-label='Delete todo'
+                          onClick={() => handleDialog(todo, 'Delete')}
+                          className='flex-none text-gray-500 hover:text-red-500'
+                        >
+                          <X className='h-5 w-5' />
+                        </button>
+                      </div>
                     </li>
                   );
                 })}
@@ -161,12 +182,42 @@ function App() {
           theme={theme}
           transition={Bounce}
         />
-        {isDialogOpen && (
+        {isEditOpen && (
           <ModalDialog
-            onClose={() => setIsDialogOpen(false)}
+            onClose={() => setIsEditOpen(false)}
+            header={{
+              title: 'Edit todo',
+              headerIcon: { icon: Edit, styling: 'text-emerald-500' },
+            }}
+            content={
+              <input
+                placeholder='What needs to be done?'
+                autoComplete='off'
+                autoFocus={true}
+                value={selectedTodo!.title}
+                onChange={(e) => {
+                  const edited = e.target.value;
+                  setSelectedTodo((prev) =>
+                    prev ? { ...prev, title: edited } : prev
+                  );
+                }}
+                required
+                className='w-full rounded-xl bg-white dark:bg-gray-800/70 border border-gray-200/80 dark:border-gray-700/60 p-3 shadow-sm transition-smooth focus-within:shadow-md focus-within:shadow-primary/10 focus-within:border-primary/40 dark:focus-within:border-primary/50 hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500'
+              />
+            }
+            footerAction={{
+              label: 'Save',
+              styling: 'primaryButton',
+              onConfirm: () => handleEditTodo(selectedTodo!),
+            }}
+          />
+        )}
+        {isDeleteOpen && (
+          <ModalDialog
+            onClose={() => setIsDeleteOpen(false)}
             header={{
               title: 'Delete todo',
-              headerIcon: { icon: AlertTriangle, styling: 'text-red-500' },
+              headerIcon: { icon: Trash2, styling: 'text-red-500' },
             }}
             content={
               <div className='flex flex-col items-center justify-center gap-3'>
@@ -178,7 +229,8 @@ function App() {
             }
             footerAction={{
               label: 'Delete',
-              onConfirm: () => handleDeleteTodos(selectedTodo!.id),
+              styling: 'deleteButton',
+              onConfirm: () => handleDeleteTodo(selectedTodo!.id),
             }}
           />
         )}

@@ -15,6 +15,7 @@ type ModalDialogProps = {
   footerAction: {
     label: string;
     onConfirm: () => void;
+    styling: string;
   };
 };
 
@@ -24,7 +25,6 @@ export const ModalDialog = ({
   content,
   footerAction,
 }: ModalDialogProps) => {
-
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -45,7 +45,7 @@ export const ModalDialog = ({
   };
 
   const HeaderIcon = header.headerIcon;
-  
+
   return (
     <>
       <div className='backdrop z-10'>
@@ -66,7 +66,7 @@ export const ModalDialog = ({
             className='flex flex-col justify-center items-center gap-8 p-5 text-center'
           >
             <div className='flex flex-col items-center gap-1.5'>
-              <HeaderIcon.icon size={60} className={`${HeaderIcon.styling}`} />
+              <HeaderIcon.icon size={50} className={`${HeaderIcon.styling}`} />
               <h3 className='text-2xl tracking-wide'>{header.title}</h3>
             </div>
             {content}
@@ -84,7 +84,7 @@ export const ModalDialog = ({
                 type='submit'
                 autoFocus
                 aria-label={footerAction.label}
-                className='deleteButton w-full'
+                className={`w-full ${footerAction.styling}`}
               >
                 {footerAction.label}
               </button>

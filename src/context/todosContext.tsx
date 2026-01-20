@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { CircleCheckBig, Trash2 } from 'lucide-react';
+import { CircleCheckBig, Edit, Trash2 } from 'lucide-react';
 import { createContext } from 'react';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -15,6 +15,7 @@ type TodosContextType = {
   completedTodos: TodoItem[];
   unCompletedTodos: TodoItem[];
   addTodo: (todoTitle: string) => void;
+  editTodo: (todo: TodoItem) => void;
   deleteTodo: (id: string) => void;
   toggleComplete: (id: string) => void;
 };
@@ -47,6 +48,19 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const editTodo = (todo: TodoItem) => {
+    const existingTodo = todos.find((t) => t.id === todo.id);
+    if (existingTodo?.title === todo.title) {
+      return;
+    }
+    setTodos((prev) =>
+      prev.map((t) => (t.id === todo.id ? { ...t, title: todo.title } : t))
+    );
+    toast(`Edited: ${todo.title}`, {
+      icon: <Edit className='completeIcon' />,
+    });
+  };
+
   const deleteTodo = (id: string) => {
     const deletedTodo: TodoItem = todos.filter((todo) => todo.id === id)[0];
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -70,6 +84,7 @@ export const TodosProvider = ({ children }: { children: React.ReactNode }) => {
         completedTodos,
         unCompletedTodos,
         addTodo,
+        editTodo,
         deleteTodo,
         toggleComplete,
       }}

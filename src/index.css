@@ -4,6 +4,8 @@
 @theme {
   --font-display: 'Oswald', sans-serif;
   --color-border: oklch(87.2% 0.01 258.338);
+  --color-primary: #000;
+  --color-secondary: #fff;
   --transition-smooth: all 0.3s ease-in-out;
 
   --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
@@ -22,6 +24,9 @@
 
 @variant dark {
   --color-border: oklch(44.6% 0.03 256.802);
+  --color-primary: #fff;
+  --color-secondary: #000;
+
 }
 
 @utility transition-smooth {
@@ -33,9 +38,9 @@
     border-color: var(--color-border);
   }
   body {
-    @apply h-screen w-screen overflow-hidden font-display text-black bg-white;
+    @apply h-screen w-screen overflow-hidden font-display text-primary bg-white;
     @variant dark {
-      @apply text-white bg-black;
+      @apply  bg-black;
     }
   }
   button {
@@ -47,8 +52,7 @@
   .content {
     @apply bg-linear-0 from-blue-100 via-white to-indigo-100;
     @variant dark {
-      @apply text-white 
-      bg-linear-0 from-blue-950/80 via-slate-900 to-black;
+      @apply bg-linear-0 from-blue-950/80 via-slate-900 to-black;
     }
   }
 
@@ -75,12 +79,12 @@
 
   .activeTab,
   .primaryButton {
-    @apply text-white bg-emerald-500;
+    @apply text-secondary bg-emerald-500;
     &:hover {
-      @apply bg-emerald-300 text-black;
+      @apply bg-emerald-300 text-primary;
     }
     @variant dark {
-      @apply bg-emerald-700;
+      @apply text-primary bg-emerald-700;
       &:hover {
         @apply bg-emerald-500;
       }
@@ -98,12 +102,12 @@
     }
   }
   .deleteButton {
-    @apply bg-red-500 text-white;
+    @apply bg-red-500 text-secondary;
     &:hover {
       @apply bg-red-400;
     }
     @variant dark {
-      @apply bg-red-500;
+      @apply bg-red-500 text-primary;
       &:hover {
         @apply bg-red-400;
       }

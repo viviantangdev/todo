@@ -16,7 +16,7 @@ const CompleteButton = ({ item, onClick }: CompleteButtonProps) => {
       {item.completed ? (
         <CircleCheckBig className='h-5 w-5 completeIcon' />
       ) : (
-        <Circle className='h-5 w-5  unCompleteIcon' />
+        <Circle className='h-5 w-5 unCompleteIcon' />
       )}
     </button>
   );
