@@ -4,7 +4,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type Theme = 'light' | 'dark';
 
-type ThemeContextType = {
+export type ThemeContextType = {
   theme: Theme;
   toggleTheme: () => void;
 };
